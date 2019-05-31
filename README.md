@@ -2,7 +2,7 @@
 Feature Models That Have Numerical Features (Artifact)
 This repository consist of a VirtualBox *Virtual Machine* (VM) pre-built and pre-configured **to** **re-create** the experiments of the research paper https://doi.org/10.1145/3336294.3336297, and, as well, **to re-use** it with different feature models and/or data-sets.
 
-Analyses of *Software Product Lines* (SPLs) rely on automated solvers to navigate complex dependencies among boolean features and find legal configurations. Often these analyses do not support numerical
+​	Analyses of *Software Product Lines* (SPLs) rely on automated solvers to navigate complex dependencies among boolean features and find legal configurations. Often these analyses do not support numerical
 features with constraints because propositional formulas use only Boolean variables. While other automated solvers can represent numerical features natively, they are limited in their ability to count
 and *Uniform Random Sample* (URS) configurations, which are key operations to derive unbiased statistics on configuration spaces. 
 
@@ -10,7 +10,7 @@ and *Uniform Random Sample* (URS) configurations, which are key operations to de
 
 ​	Compared to state-of-art Satisfiability Modulo Theory and Constraint Programming solvers, our approach has two advantages: 1) faster and more scalable configuration counting and 2) reliable URS of SPL configurations. Our work can be **re-used** to extend prior SAT-based SPL analyses to support numerical features and constraints.
 
-​	This *README* provides the detailed explanations and technical steps to fast and easily make use of our approach. <u>A VM is provided due to the amount of knowledge and time necessary to configure and run the third-party tools</u>. Additionally, a Linux operating system is mandatory to run all the tools, while a VM runs on almost any operating system and/or hardware. The VM includes the VirtualBox Guest Tools to allow direct interaction and responsiveness of the VM main *Desktop*.
+​	This *README* provides the detailed explanations and technical steps to fast and easily make use of our approach. **<u>A VM is provided due to the amount of knowledge and time necessary to configure and run the third-party tools**</u>. Additionally, a Linux operating system is mandatory to run all the tools, while a VM runs on almost any operating system and/or hardware. The VM includes the VirtualBox Guest Tools to allow direct interaction and responsiveness of the VM main *Desktop*.
 
 ## Artifact Third-Party Content
 
@@ -39,11 +39,23 @@ and *Uniform Random Sample* (URS) configurations, which are key operations to de
 * Uniform data distribution test Python scripts.
 * more ([more](https://)).
 
+## Requirements
+
+- A PC, laptop or notebook with at least 4GB of RAM and 5GB of disk space.
+- Oracle VM VirtualBox installed ([Downloads](https://www.virtualbox.org/wiki/Downloads)).
+- Intel VT-x or AMD-V 'Active' in the PC BIOS CPU settings, necessary for x86_64 VMs ([+INFO](https://www.youtube.com/watch?v=g8-go0RFPjc)).
+
 ## Usage
 
-How to proceed to replicate the state of practice and/or add new tools:
+The first step is to load the downloaded VM into VirtualBox.  We just need to click *File->Import Appliance* and search for *SPLC19VM.ova*. After that, we just *click on it* *and press Start*.
 
-* 
+Once Lubuntu has loaded:
+
+- User: caosd
+- Password: splc19
+- Sudoers Password: splc19
+
+After the desktop has appeared, we recommend to resize and maximize the VM view, so it automatically adapts to the desired screen size.
 
 ## References
 
@@ -57,3 +69,11 @@ How to proceed to replicate the state of practice and/or add new tools:
 - [SMARCH](https://dl.acm.org/citation.cfm?id=3106273)
 - [KS-Test](https://dl.acm.org/citation.cfm?id=3106273)
 - more ([more](https://)).
+
+## Co-Authors
+
+1. **Daniel-Jesus Munoz**: CAOSD, Dpt. LCC, Universidad de Málaga, Andalucía Tech, Spain
+2. **Jeho Oh**: Department of Computer Science Austin, Texas, USA
+3. **Mónica Pinto**: CAOSD, Dpt. LCC, Universidad de Málaga, Andalucía Tech, Spain
+4. **Lidia Fuentes**: CAOSD, Dpt. LCC, Universidad de Málaga, Andalucía Tech, Spain
+5. **Don Batory**: Department of Computer Science Austin, Texas, USA
