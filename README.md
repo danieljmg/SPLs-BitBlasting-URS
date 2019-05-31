@@ -1,5 +1,4 @@
-# Sampling Product Configurations Of
-Feature Models That Have Numerical Features (Artifact)
+# Sampling Product Configurations Of Feature Models That Have Numerical Features (Artifact)
 This repository consist of a VirtualBox *Virtual Machine* (VM) pre-built and pre-configured **to** **re-create** the experiments of the research paper https://doi.org/10.1145/3336294.3336297, and, as well, **to re-use** it with different feature models and/or data-sets.
 
 ​	Analyses of *Software Product Lines* (SPLs) rely on automated solvers to navigate complex dependencies among boolean features and find legal configurations. Often these analyses do not support numerical
