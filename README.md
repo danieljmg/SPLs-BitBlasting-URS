@@ -75,7 +75,7 @@ In the main Desktop we find:
 
 The steps to re-create RQ1 are:
 
-1. Represent any feature model into DIMACS format:
+1. Represent **any feature model** into DIMACS format:
 
    1. First we need a CNF representation of the Boolean part of a feature model. For the seven models evaluated. The just Boolean models can be found at: */home/caosd/Desktop/featuremodels/sat/Boolean*
 
@@ -91,18 +91,11 @@ The steps to re-create RQ1 are:
 
    4. The end-results (Boolean CNF + appended numerical features CNF) of the 7 SPLs are pre-computed and accesible at: */home/caosd/Desktop/featuremodels/sat/DIMACS*
 
-2. Count the number of CNF clauses based on the number of bits (range) of the numerical features.
+2. Count the number of CNF clauses of the DIMACS models based on the number of bits (range) of the numerical features. The numerical features are located in the header of each DIMACS model.
 
-3. Measure the time to count all the valid configurations by sharpSAT.
+3. Measure the average time to count all the valid configurations by sharpSAT 97 times. For this, there are Bash scripts for each model at: */home/caosd/Desktop/UFscripts/SharpSATCounting* as well as a generic one (*generic.sh*). In case of the specific ones, you must run them using *Time* at the LXTerminal as:  *time ./NAME.sh*. In case of the generic one, two input parameters must be declared, number of counting repetitions and the location of the DIMACS model, for example:  *./generic.sh 97 /home/caosd/Desktop/featuremodels/sat/DIMACS/axtls_2_1_4.dimacs*.
 
-4. Measure the time to URS a configuration by SMARCH.
-
-   1. *2, 3, and 4* are all done with the script *evaluation.py* fount at: */home/caosd/PycharmProjects/splc19/HCS_Optimizer*
-   2. To perform the measurement the following pieces of codes must be active, and the rest as a comment. SharptSAT and the rest of the tools are already configured in the script.
-   3. Some caveats are:
-      1. *target = "X"*  where X is the name of the SPL. The example alternatives are available as a comment in the script's header.
-      2. *tool = "Y"* where Y is sharpSAT in this case.
-      3. *size = N* where N is ... (JEHO)
+4. Measure the time to URS a configuration by SMARCH. For this, there are Bash scripts for each model and number of samples tested in the research (i.e., *100*, *300*, *500*) at: */home/caosd/Desktop/UFscripts/SharpSATSampling* as well as a generic one (*generic.sh*).  In case of the specific ones, you must run them accessing the folder with the name of the feature model and execute the desired number of samples in the LXTerminal:  *./NUMBER_OF_SAMPLES.sh*. In case of the generic one, two input parameters must be declared, number of samples and the name of the DIMACS model located at the folder *featuremodels*, for example:  *./generic.sh 100 Dune*.
 
 
 
@@ -115,6 +108,17 @@ The steps to re-create RQ2 are:
 **RQ3: "*Is URS efficient for Bit-Blasted Propositional Formulas?*"**
 
 The steps to re-create RQ3 are:
+
+
+
+Measure the time to URS a configuration by SMARCH.
+
+1. *2, 3, and 4* are all done with the script *evaluation.py* fount at: */home/caosd/PycharmProjects/splc19/HCS_Optimizer*
+2. To perform the measurement the following pieces of codes must be active, and the rest as a comment. SharptSAT and the rest of the tools are already configured in the script.
+3. Some caveats are:
+   1. *target = "X"*  where X is the name of the SPL. The example alternatives are available as a comment in the script's header.
+   2. *tool = "Y"* where Y is sharpSAT in this case.
+   3. *size = N* where N is ... (JEHO)
 
 
 
