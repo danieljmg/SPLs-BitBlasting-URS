@@ -24,7 +24,6 @@ and *Uniform Random Sample* (URS) configurations, which are key operations to de
 - URS, *Statistical Random Sampling* (SRS) and *Recursive Random Sampling* (RRS) tools from the co-authors of the University of Texas at Austin et al. ([SMARCH](https://apps.cs.utexas.edu/apps/tech-reports/171355)).
 - Kolmogorov-Smirnov Test web-service ([KS-Test](https://dl.acm.org/citation.cfm?id=3106273)).
 - Mann-Whitney U Test ([MWU-Test](https://www.socscistatistics.com/tests/mannwhitney/default2.aspx)).
-- more ([more](https://)).
 
 ## Artifact New Content
 
@@ -39,7 +38,6 @@ and *Uniform Random Sample* (URS) configurations, which are key operations to de
 - Python script to rank, estimate, and compare both ranks of a set of random solutions. Each set of N solutions is measured and obtained from a different reasoner.
 - Intermediate files as set of samples, ranks, comparisons, solutions, etc.
 - Uniform data distribution test Python scripts.
-- more ([more](https://)).
 
 ## Requirements
 
