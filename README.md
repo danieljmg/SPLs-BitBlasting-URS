@@ -1,4 +1,4 @@
-# VIRTUAL MACHINE SPLC19.ova DOWNLOAD LINK: https://drive.google.com/open?id=1sl-pik2vMhEYobvoHxwokrCd6rUD62jF
+# VIRTUAL MACHINE SPLC19.ova DOWNLOAD LINK: https://drive.google.com/open?id=1UGJ3cnDOSJIL1r0bTvbMiwFykMYKXQR2
 
 # Sampling Product Configurations Of Feature Models That Have Numerical Features (Artifact)
 
@@ -124,66 +124,55 @@ The steps to re-create RQ3 are:
 3. **Rank Clafer samples and check KS-Test**: 
 
    1. **Not colossal models** (e.g., DuneSystem, Trimesh, HiPAcc, HSMGP): For this, we need to launch *PyCharm* found in the *Desktop*. 
-      1. We need to open *sortfullranks.py* under the *main directory* of the *splc19* project. This script sort the ranks of an SPL depending on their performance goal. Just the name of the model must be change. The unsorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/not_ranked/*, however, the pre-computed sorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/ranked/*
-      2. Open *readclaferFSE.py* under the *main directory* of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/clafer_programming_friendly/*.
-      3. Open *ranksamples.py* under the *main directory* of the *splc19* project. This scripts uses  the two previous files to output all the samples sorted with their respective performance metrics. Caveat are *name = "NAMEOFSPL"*, *loopa = [NUMBER, OF, SAMPLES]*, *reasoner = "clafer"*, and *spltype = "FSE"*. The outputs (and pre-computed) are located at: */home/caosd/featuremodels/FSE_models_performance/ranked/*
+      1. We need to open *sortfullranks.py* under the *ranksampling* directory of the *splc19* project. This script sort the ranks of an SPL depending on their performance goal. Just the name of the model must be change. The unsorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/not_ranked/*, however, the pre-computed sorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/ranked/*
+      2. Open *readclaferFSE.py* under the *ranksampling* directory of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/clafer_programming_friendly/*.
+      3. Open *ranksamples.py* under the *ranksampling* directory of the *splc19* project. This script uses  the two previous files to output all the samples sorted with their respective performance metrics. Caveat are *name = "NAMEOFSPL"*, *loopa = [NUMBER, OF, SAMPLES]*, *reasoner = "clafer"*, and *spltype = "FSE"*. The outputs (and pre-computed) are located at: */home/caosd/samples/clafer_ranked*
       4. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
    2. **Colossal models** (e.g., axtls_2_1_4, fiasco_17_10, uClibc-ng_1_0_29): For this, we need to launch *PyCharm* found in the *Desktop*. 
       1. Open *readclaferKConfig* under the *main directory* of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/clafer_programming_friendly/*.
-      2. Open *HCS_Optimizer/evaluation.py* in the *PyCharm splc19 project*.
-      3. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
+      2. Open *HCS_Optimizer/randtest.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"*, *tool = "clafer"* and *numsamples = NUMBEROFSAMPLES* (which in our evaluation are *100*, *300* and *500*. The inputs are the *model.dimacs* and the *model.json* that contains the performance metrics. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* , the performance metrics at */home/caosd/featuremodels/KConfig_models_performance/not_ranked/* and the samples programming friendly at */home/caosd/samples/{tool}_programming_friendly/*.
+      3. The lines between *#START SMARCH SAMPLING:* and *#END SMARCH SAMPLING:* must be commented. The lines between *#START Clafer OR Z3 ranking:* and *#END Clafer OR Z3 ranking:* must be uncommented
+      4. The *Total Time* output must be divided by the *numsamples* as the individual timings has considered some overhead.
+      5. In the last set of outputted data we can see a table with sorted *Expected Rank*, and *Actual Rank* of each configuration.
+      6. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if it is below critical value of 95% compared to a KS Table).
 
 4. **Random Sample with Z3**:
 
-5. Not colossal models** (e.g., DuneSystem, Trimesh, HiPAcc, HSMGP): For this, we need to launch *PyCharm* found in the *Desktop*. 
+   1. For** this, there are Bash scripts for each model and each set of samples at: */home/caosd/Desktop/UFscripts/ClaferSampling* as well as a generic one (*generic.sh*). In case of the specific ones, you must run them using *Time* at the LXTerminal as:  *time ./NAME.sh*. In case of the generic one, two additional input parameters must be declared, number of samples and the name of the DIMACS model, for example:  *./generic.sh 100 Trimesh*. NOTE: The total time must be divided between the number of samples.
 
-   1. We need to open *sortfullranks.py* under the *main directory* of the *splc19* project. This script sort the ranks of an SPL depending on their performance goal. Just the name of the model must be change. The unsorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/not_ranked/*, however, the pre-computed sorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/ranked/*
-   2. Open *readclaferFSE.py* under the *main directory* of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/clafer_programming_friendly/*.
-   3. Open *ranksamples.py* under the *main directory* of the *splc19* project. This scripts uses  the two previous files to output all the samples sorted with their respective performance metrics. Caveat are *name = "NAMEOFSPL"*, *loopa = [NUMBER, OF, SAMPLES]*, *reasoner = "clafer"*, and *spltype = "FSE"*. The outputs (and pre-computed) are located at: */home/caosd/featuremodels/FSE_models_performance/ranked/*
-   4. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
-
-6. **Colossal models** (e.g., axtls_2_1_4, fiasco_17_10, uClibc-ng_1_0_29): For this, we need to launch *PyCharm* found in the *Desktop*. 
-
-   1. Open *readclaferKConfig* under the *main directory* of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/clafer_programming_friendly/*.
-   2. Open *HCS_Optimizer/evaluation.py* in the *PyCharm splc19 project*.
-   3. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
-
-7. **Measure Z3 samples and check KS-Test**:
-
-   1. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
-
-8. **Random Sample with SMARCH**:
+5. **Measure Z3 samples and check KS-Test**:
 
    1. **Not colossal models** (e.g., DuneSystem, Trimesh, HiPAcc, HSMGP): For this, we need to launch *PyCharm* found in the *Desktop*. 
-      1. Open *HCS_Optimizer/evaluation.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"* and *numsamples = NUMBEROFSAMPLES* (which in our evaluation are *100*, *300* and *500*. The inputs are the *model.dimacs* and the *model.csv* that contains the performance metrics. The *Total Time* output must be divided by the *numsamples* as the individual timings have consider some overhead.
-      2. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
+      1. We need to open *sortfullranks.py* under the *ranksampling* directory of the *splc19* project. This script sort the ranks of an SPL depending on their performance goal. Just the name of the model must be change. The unsorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/not_ranked/*, however, the pre-computed sorted configurations are located at */home/caosd/featuremodels/FSE_models_performance/ranked/*
+      2. Open** *readz3.py* under the *ranksampling* directory of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/z3_programming_friendly/*.
+      3. Open *ranksamples.py* under the *ranksampling* directory of the *splc19* project. This script uses  the two previous files to output all the samples sorted with their respective performance metrics. Caveat are *name = "NAMEOFSPL"*, *loopa = [NUMBER, OF, SAMPLES]*, *reasoner = "z3"*, and *spltype = "FSE"*. The outputs (and pre-computed) are located at: */home/caosd/samples/z3_ranked*
+      4. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
    2. **Colossal models** (e.g., axtls_2_1_4, fiasco_17_10, uClibc-ng_1_0_29): For this, we need to launch *PyCharm* found in the *Desktop*. 
+      1. Open *readclaferKConfig* under the *main directory* of the *splc19* project. This scripts transforms Clafer regular output into a more programming-friendly file. Caveat are *name = "NAMEOFSPL"*, *tool = "z3"* and *loopa = [NUMBER, OF, SAMPLES]*. The inputs are the previous point files, the outputs are localted (and pre-computed) at */home/caosd/samples/z3_programming_friendly/*.
+      2. Open *HCS_Optimizer/randtest.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"*, *tool = "clafer"*  and *numsamples = NUMBEROFSAMPLES* (which in our evaluation are *100*, *300* and *500*. The inputs are the *model.dimacs* and the *model.json* that contains the performance metrics. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* , the performance metrics at */home/caosd/featuremodels/KConfig_models_performance/not_ranked/* and the samples programming friendly at */home/caosd/samples/{tool}_programming_friendly/*.
+      3. The lines between *#START SMARCH SAMPLING:* and *#END SMARCH SAMPLING:* must be commented. The lines between *#START Clafer OR Z3 ranking:* and *#END Clafer OR Z3 ranking:* must be uncommented
+      4. The *Total Time* output must be divided by the *numsamples* as the individual timings has considered some overhead.
+      5. In the last set of outputted data we can see a table with sorted *Expected Rank*, and *Actual Rank* of each configuration.
+      6. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if it is below critical value of 95% compared to a KS Table).
+      7. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
 
-9. **Measure SMARCH samples and check KS-Test**:
+6. **Random Sample with SMARCH**:
+
+   1. **Not colossal models** (e.g., DuneSystem, Trimesh, HiPAcc, HSMGP): For this, we need to launch *PyCharm* found in the *Desktop*. 
+      1. Open *HCS_Optimizer/evaluation.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"* and *numsamples = NUMBEROFSAMPLES* (which in our evaluation are *100*, *300* and *500*. The inputs are the *model.dimacs* and the *model.csv* that contains the performance metrics. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* and the performance metrics at */home/caosd/featuremodels/FSE_models_performance/not_ranked/* .
+      2. The *Total Time* output must be divided by the *numsamples* as the individual timings has considered some overhead.
+      3. In the last set of outputted data we can see a table with sorted *Expected Rank*, and *Actual Rank* of each configuration.
+      4. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if it is below critical value of 95% compared to a KS Table).
+   2. **Colossal models** (e.g., axtls_2_1_4, fiasco_17_10, uClibc-ng_1_0_29): For this, we need to launch *PyCharm* found in the *Desktop*. 
+      1. Open *HCS_Optimizer/randtest.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"* and *numsamples = NUMBEROFSAMPLES* (which in our evaluation are *100*, *300* and *500*. The inputs are the *model.dimacs* and the *model.json* that contains the performance metrics. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* and the performance metrics at */home/caosd/featuremodels/KConfig_models_performance/not_ranked/* .
+      2. The lines between *#START SMARCH SAMPLING:* and *#END SMARCH SAMPLING:* must be uncommented. The lines between *#START Clafer OR Z3 ranking:* and *#END Clafer OR Z3 ranking:* must be commented
+      3. The *Total Time* output must be divided by the *numsamples* as the individual timings has considered some overhead.
+      4. In the last set of outputted data we can see a table with sorted *Expected Rank*, and *Actual Rank* of each configuration.
+      5. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if it is below critical value of 95% compared to a KS Table).
+
+7. **Measure SMARCH samples and check KS-Test**:
 
    1. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if ti is below critical value of 95% compared to a KS Table).
-
-
-
-> Kconfig
-
-1. Go to HCS_Optimizer/randtest.py
-2. Modify absolute path, set target name
-3. Run functions for testing Smarch resutls 
-   samples = sample(vcount, clauses, size, wdir, [], False, 1, True)
-   get_rank_smarch(samples, json)
-4. First output is the sampling time. Divide total time by number of samples
-5. Second result is two column data. First is expected rank, second is actual rank
-6. Input rank data to run KS test (we used https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp)
-   Passed if test statistics is below critical value 95% (look up for KS table)
-7. Do this for all dimacs files in BitBlasting/Kconfig_numerical, for sample sizes 100, 300, 500
-8. Set samplefile as samples from z3 and clafer
-9. Run function for testing z3 and clafer samples
-   get_rank_numeric(features, samplefile, json)
-10. Output is two column data. First is expected rank, second is actual rank
-11. Input rank data to run KS test (we used https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp)
-    Passed if test statistics is below critical value 95% (look up for KS table)
-12. Do this for all sample files in BitBlasting/Kconfig_numerical/samples
 
 **RQ4: "*Can existing SAT-analyses of SPLs use Bit-Blasted Propositional Formulas?*"**
 
