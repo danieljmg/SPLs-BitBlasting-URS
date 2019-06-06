@@ -168,7 +168,7 @@ The steps to re-create RQ3 are:
       5. In the last set of outputted data we can see a table with sorted *Expected Rank*, and *Actual Rank* of each configuration.
       6. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if it is below critical value of 95% compared to a KS Table).
 
-6. **Random Sample with SMARCH, rank the samples and check KS-Test **:
+6. **Random Sample with SMARCH, rank the samples and check KS-Test**:
 
    1. **Not colossal models** (e.g., DuneSystem, Trimesh, HiPAcc, HSMGP): For this, we need to launch *PyCharm* found in the *Desktop*. 
       1. Open *HCS_Optimizer/evaluation.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"* and *numsamples = NUMBEROFSAMPLES* (which in our evaluation are *100*, *300* and *500*. The inputs are the *model.dimacs* and the *model.csv* that contains the performance metrics. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* and the performance metrics at */home/caosd/featuremodels/FSE_models_performance/not_ranked/* .
