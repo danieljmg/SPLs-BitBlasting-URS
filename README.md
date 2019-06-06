@@ -227,25 +227,6 @@ The steps to re-produce RQ4 are:
       1. pURS = Average of Column 1 rows.
       2. pTests = [MWU-T](https://www.socscistatistics.com/tests/mannwhitney/default2.aspx)(Column SRS, Column URS) with significance level 0.05 and *one-tailed* *hypothesis*.
 
-> Setup for Kconfig
-
-1. Clone https://github.com/paulgazz/kconfig_case_studies, follow instructions on readme.md, remove bugs folder
-2. Put buildSamples.sh into kconfig_case_studies folder (repo root)
-3. run vagrant up inside kconfig_case_studies (always before RQ4)
-4. Modify BUILD variable path at HCS_Optimizer/kconfigIO.py line 10
-5. Modify self.wdir at HCS_Optimizer/evaluation.py line 19 to have correct path to kconfig_case_studies repo
-
-> Kconfig
-
-1. Set target, file path, rep=25, n=20, rec=-1 to get SRS data
-2. Set dimacs and const path
-3. change eval to "Kconfig(target, features, wdir)"
-4. comment out lines 188 to 202, uncomment line 186
-5. Ouput is 1 column data: average to get pSRS
-6. n=200, rec=1 to get URS data
-7. Ouput is 1 column data: average to get pURS
-8. For pTest, SRS data and URS data for Mann-Whitney U test
-
 ## References
 
 - [Lubuntu](https://lubuntu.net/)
