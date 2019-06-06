@@ -30,6 +30,7 @@ and *Uniform Random Sample* (URS) configurations, which are key operations to de
 - KS-Table: 
 - ![KS-Table](https://i0.wp.com/www.real-statistics.com/wp-content/uploads/2012/11/one-sample-ks-table.png?w=514)
 - Mann-Whitney U Test ([MWU-Test](https://www.socscistatistics.com/tests/mannwhitney/default2.aspx)).
+- Kconfig performance VM ([KConfigVM](https://github.com/paulgazz/kconfig_case_studies)).
 
 ## Artifact New Content
 
@@ -191,6 +192,7 @@ The steps to re-produce RQ3 are:
 The steps to re-produce RQ4 are:
 
 1. **Not colossal models** (e.g., DuneSystem, Trimesh, HiPAcc, HSMGP): For this, we need to launch *PyCharm* found in the *Desktop*. 
+
    1. Open *HCS_Optimizer/search.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"*, *numsamples = NUMBEROFSAMPLES* and *repetitions = NUMBEROFREPETEATEDTESTS* (which in our evaluation are *20* and *97* respectively. The inputs are the *model.dimacs* and the *model.csv* that contains the performance metrics. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* and the performance metrics at */home/caosd/featuremodels/FSE_models_performance/not_ranked/* . **NOTE**: *const* input must be commented (not the initialization)
    2. Line *eval=...* inside *non colossal sampling* comments must be uncommented. Additionally, line *eval=...* inside *colossal sampling* comments must be commented.
    3. The portion of the code between *START non colossal sampling* and *END non colossal sampling* must be uncommented. Additionally, the portion of the code between *START colossal sampling* and *END colossal sampling* must be commented.
@@ -213,17 +215,30 @@ The steps to re-produce RQ4 are:
       6. pURS = Average of Column 6 rows.
       7. pTest = [MWU-T](https://www.socscistatistics.com/tests/mannwhitney/default2.aspx)(Column 2, Column 6) with significance level 0.05 and *one-tailed* *hypothesis*.
       8. rBetter = Average of Column 5 rows.
+
 2. **Colossal models** (e.g., axtls_2_1_4, fiasco_17_10, uClibc-ng_1_0_29): 
-   1. For this step, Intel VT-x BIOS option does not work yet (Virtualbox is in process of allowing nested x86_64 VMs). However, AMD-V is supported. To sum-up, **with an AMD CPU you are good to go**.
+
+   1. For this step, Intel VT-x BIOS option does not work yet (Virtualbox is in process of allowing nested x86_64 VMs). However, AMD-V is supported. To sum-up, **with an AMD CPU you are good to go**. 
+
+      ​	INFO: The KConfig VM and the installation steps can be found at [KConfigVM](https://github.com/paulgazz/kconfig_case_studies).
+
    2. Open a *LXTerminal* and:
+
       1. Go to */home/caosd/kconfig_case_estudies*.
-      2. Execute *vagrant up*  
+      2. Execute *vagrant up*  .
+
    3. We need to launch *PyCharm* found in the *Desktop*.
+
    4. Open *HCS_Optimizer/search.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "SPLNAME"*, *numsamples = NUMBEROFSAMPLES* and *repetitions = NUMBEROFREPETEATEDTESTS* (which in our evaluation are *20* and *25* respectively. The inputs are the *model.dimacs* and the *model.const* that contains certain constraints to prevent the VM to crash due to insufficient memory and/or CPU. We recall that the models are located at */home/caosd/featuremodels/sat/DIMACS/* and the constraint at */home/caosd/featuremodels/KConfig_models_performance/not_ranked/* . **NOTE**: *const* variable must be uncommented.
+
    5. Line *eval=...* inside *non colossal sampling* comments must be commented. Additionally, line *eval=...* inside *colossal sampling* comments must be uncommented.
+
    6. The portion of the code between *START non colossal sampling* and *END non colossal sampling* must be commented. Additionally, the portion of the code between *START colossal sampling* and *END colossal sampling* must be uncommented.
+
    7. Run it with *RightClick->Run*. 
+
    8. In this case:
+
       1. pURS = Average of Column 1 rows.
       2. pTests = [MWU-T](https://www.socscistatistics.com/tests/mannwhitney/default2.aspx)(Column SRS, Column URS) with significance level 0.05 and *one-tailed* *hypothesis*.
 
@@ -239,6 +254,7 @@ The steps to re-produce RQ4 are:
 - [SMARCH](https://dl.acm.org/citation.cfm?id=3106273)
 - [KS-Test](https://dl.acm.org/citation.cfm?id=3106273)
 - [MWU-Test](https://www.socscistatistics.com/tests/mannwhitney/default2.aspx)
+- [KConfigVM](https://github.com/paulgazz/kconfig_case_studies)
 
 ## Authors
 
