@@ -1,6 +1,6 @@
 ## VIRTUAL MACHINE SPLC19VM.ova DOWNLOAD LINK: 
 
-https://drive.google.com/file/d/1t1XO1VRQXtmNMGQHPRuUpnc0MpYP51Zc/view?usp=sharing
+https://drive.google.com/open?id=14Yqn-X3lkbRehwneryyjMrgyC8p5lu7t
 
 # Sampling Product Configurations Of Feature Models That Have Numerical Features (Artifact)
 
@@ -80,6 +80,22 @@ In the main Desktop we find:
 
 The steps to re-produce RQ1 are:
 
+1. Represent *A + B > C* in DIMACS format using Bit-Blasting with an increasing max-cap limit, which increases the number of bits necessary to represent those numbers. In our case study, the number of bits are *[3, 4, ..., 33]*. The models are pre-computed at */home/caosd/Desktop/featuremodels/sat/AplusBgreaterC* and identified by *addz3_NUMBEROFBITS.dimacs*. If we want to compute them, we open PyCharm. The main project (splc19) should be automatically visible with address */home/caosd/PycharmProjects/splc19*. There, we can open the script named *Z3toCNF.py*, which transforms Z3 models into Tseitin-CNF DIMACS format. Some caveats are:
+   1. *stringvars = List.Names|| vars =  BitVecs(Spaced.NAMES, N)...* should include the numerical features name (NAMES), and the number of bits for each of them (N)
+   2. *g.add(auxinitvars == 1, UGT((vars[0] + vars[1]), vars[2]))*
+   3. The output must be copied and pasted in a .dimacs file.
+2. Count the number of CNF clauses of the DIMACS models based on the number of bits (i.e., range) of the numerical features. The number of numerical features are located in the header of each DIMACS file at */home/caosd/Desktop/featuremodels/sat/AplusBgreaterC*.
+3. Measure the average time to count all the valid configurations of this model by SharpSAT 97 times. For this, there is a Bash script at: */home/caosd/Desktop/UFscripts/SharpSAT_ABGTC* with the name *Nbits.sh*. You must run them using *Time* at the LXTerminal as:  *time ./Nbits.sh X* where *X* should be replaced by the number of bits between *3* and *33* inclusively. 
+4. For this, we need to launch *PyCharm* found in the *Desktop*. 
+   1. Open *HCS_Optimizer/evaluation.py* in the *PyCharm splc19 project*. Main code caveats are *modelname = "NUMBEROFBITS"* and *numsamples = 1*. NOTE: *modelname* ranges withing *3* and *33*.
+   2. The *Total Time* outputs are the results we are searching for.
+
+
+
+**RQ2: "*Is configuration counting efficient for Bit-Blasted Propositional Formulas?*"**
+
+The steps to re-produce RQ2 are:
+
 1. Represent **any feature model** into DIMACS format:
 
    1. First we need a CNF representation of the Boolean part of a feature model. For the seven models evaluated, the Boolean models can be found at: */home/caosd/Desktop/featuremodels/sat/Boolean*
@@ -90,31 +106,26 @@ The steps to re-produce RQ1 are:
 
    3. We need to transform the numerical definitions into CNF, and then, append them to the Boolean models of step 1.1. For that, we open PyCharm. The main project (splc19) should be automatically visible with address */home/caosd/PycharmProjects/splc19*. There, we can open the script named *Z3toCNF.py*, which transforms Z3 models into Tseitin-CNF DIMACS format. Some caveats are:
 
-      1. *initvar = X* sould be changed to the last feature number of the Boolean DIMACS model. X is by default 1, as DIMACS variables start in 1.
-      2. *stringvars = List.Names|| vars =  BitVecs(Spaced.NAMES, N)...* should include the numerical features name (NAMES), and the total number of them (N)
-      3. g.add(...) should include the constraints separated by regular commas. Examples of constraints and their possibilities are added in the script header. One working example is ready for testing.
+      1. *auxinitvars == X* should be changed to the last feature number of the Boolean DIMACS model. X is by default 1, as DIMACS variables start in 1.
+      2. *stringvars = List.Names|| vars =  BitVecs(Spaced.NAMES, N)...* should include the numerical features name (NAMES), and the number of bits for each of them (N)
+      3. *g.add(...)* should include the constraints separated by regular commas, and the variables referenced in the *vars* array as defined in the previous point *[0,..., NUMBEROFVARIABLES-1]*. Examples of constraints and their possibilities are added in the script header. One working example is ready for testing.
 
    4. The end-results (Boolean CNF + appended numerical features CNF) of the 7 SPLs are pre-computed and accessible at: */home/caosd/Desktop/featuremodels/sat/DIMACS*
 
-2. Count the number of CNF clauses of the DIMACS models based on the number of bits (i.e., range) of the numerical features. The numerical features are located in the header of each DIMACS model.
+2. As it is a model counting performance comparison, we need an SPL modeled in Clafer, Z3 and DIMACS. You can find our 7 evaluated SPLs modeled in the three alternatives in the folder: */home/caosd/featuremodels*. For convenience, Z3 models are as well found in the PyCharm project *spl1c19*, under the folder Z3. They are all identified by their concrete names. In case of external models that are just in DIMACS format, we include two scripts, one to transform DIMACS into Clafer, and another DIMACS into Z3. They are located in the *PyCharm splc19 project*, folder *DIMACStransformations*. The main caveat is *dimacsname = NAMEOFSPL* and that DIMACS headers must be moved to a parallel file *NAMEOFSPLvars.dimacs*.
 
-3. Measure the average time to count all the valid configurations by SharpSAT 97 times. For this, there are Bash scripts for each model at: */home/caosd/Desktop/UFscripts/SharpSATCounting* as well as a generic one (*generic.sh*). In case of the specific ones, you must run them using *Time* at the LXTerminal as:  *time ./NAME.sh*. In case of the generic one, two input parameters must be declared, number of counting repetitions and the location of the DIMACS model, for example:  *./generic.sh 97 /home/caosd/Desktop/featuremodels/sat/DIMACS/axtls_2_1_4.dimacs*.
-
-4. Measure the time to URS a configuration by SMARCH. For this, there are Bash scripts for each model and number of samples tested in the research (i.e., *100*, *300*, *500*) at: */home/caosd/Desktop/UFscripts/SharpSATSampling* as well as a generic one (*generic.sh*).  In case of the specific ones, you must run them accessing the folder with the name of the feature model and execute the desired number of samples in the LXTerminal:  *./NUMBER_OF_SAMPLES.sh*. In case of the generic one, two input parameters must be declared, number of samples and the name of the DIMACS model located at the folder *featuremodels*, for example:  *./generic.sh 100 Dune*. Every execution result is equally available at */home/caosd/samples/sat/*. 
-
-
-
-**RQ2: "*Is configuration counting efficient for Bit-Blasted Propositional Formulas?*"**
-
-The steps to re-produce RQ2 are:
-
-1. First, as it is a model counting performance comparison, we need an SPL modeled in Clafer, Z3 and DIMACS. You can find our 7 evaluated SPLs modeled in the three alternatives in the folder: */home/caosd/featuremodels*. For convenience, Z3 models are as well found in the PyCharm project *spl1c19*, under the folder Z3. They are all identified by their concrete names. In case of external models that are just in DIMACS format, we include two scripts, one to transform DIMACS into Clafer, and another DIMACS into Z3. They are located in the *PyCharm splc19 project*, folder *DIMACStransformations*. The main caveat is *dimacsname = NAMEOFSPL* and that DIMACS headers must be moved to a parallel file *NAMEOFSPLvars.dimacs*.
-2. SharpSAT timing and counting has already been performed in RQ1.
 3. Measure the average time to count all the valid configurations by Clafer 97 times. For this, there are Bash scripts for each model at: */home/caosd/Desktop/UFscripts/ClaferCounting* as well as a generic one (*generic.sh*). In case of the specific ones, you must run them using *Time* at the LXTerminal as:  *time ./NAME.sh*. In case of the generic one, two additional input parameters must be declared, number of counting repetitions and the name of the DIMACS model, for example:  *./generic.sh 97 axtls*.
+
    1. NOTE: Clafer models (*txt* format) are compiled as an intermediate step creating *.js* format models. Both, *.txt* and *.js*, are located in */home/caosd/Desktop/featuremodels/clafer*.
+
 4. Measure the average time to count all the valid configurations by Z3 SMT solver 97 times. For this, we need to launch *PyCharm* found in the *Desktop*. Open the models identified by the *name.py* under the *z3* folder of the *splc19* project, and just run them individually with *RightClick->Run*.
+
    1. NOTE: Colossal models (Axtls, Trimesh and uClibc) where considered a timeout due to how long it takes to count configurations with Z3 SMT solver with them (i.e., years). We kindly advise not to perform model counting with such large models.
    2. NOTE: Do not modify Z3 models in this step, we will explain the code further in the next RQs. By default are RQ2 ready. We remind to the reader that untouched copies of them are found in */home/caosd/Desktop/featuremodels/Z3*.
+
+5. Measure the average time to count all the valid configurations by SharpSAT 97 times. For this, there are Bash scripts for each model at: */home/caosd/Desktop/UFscripts/SharpSATCounting* as well as a generic one (*generic.sh*). In case of the specific ones, you must run them using *Time* at the LXTerminal as:  *time ./NAME.sh*. In case of the generic one, two input parameters must be declared, number of counting repetitions and the location of the DIMACS model, for example:  *./generic.sh 97 /home/caosd/Desktop/featuremodels/sat/DIMACS/axtls_2_1_4.dimacs*.
+
+   
 
 **RQ3: "*Is URS efficient for Bit-Blasted Propositional Formulas?*"**
 
@@ -188,6 +199,8 @@ The steps to re-produce RQ3 are:
       5. We need to run the KS-Test. For this, open Firefox web-explorer, access *https://www.wessa.net/rwasp_Reddy-Moores%20K-S%20Test.wasp* and paste each case study from the previous point to check if it pass it (if it is below critical value of 95% confidence compared to a KS Table).
 
 **RQ4: "*Can existing SAT-analyses of SPLs use Bit-Blasted Propositional Formulas?*"**
+
+NOTE: In case that we want to just sample, there are Bash scripts for each model and number of samples tested in the research (i.e., *100*, *300*, *500*) at: */home/caosd/Desktop/UFscripts/SharpSATSampling* as well as a generic one (*generic.sh*).  In case of the specific ones, you must run them accessing the folder with the name of the feature model and execute the desired number of samples in the LXTerminal:  *./NUMBER_OF_SAMPLES.sh*. In case of the generic one, two input parameters must be declared, number of samples and the name of the DIMACS model located at the folder *featuremodels*, for example:  *./generic.sh 100 Dune*. Every execution result is equally available at */home/caosd/samples/sat/*. 
 
 The steps to re-produce RQ4 are:
 
