@@ -6,15 +6,15 @@ https://drive.google.com/open?id=14Yqn-X3lkbRehwneryyjMrgyC8p5lu7t
 
 This repository consist of a VirtualBox *Virtual Machine* (VM) pre-built and pre-configured **to** **re-create** the experiments of the sharing name research paper https://doi.org/10.1145/3336294.3336297, and, as well, **to re-use** it with different feature models and/or data-sets.
 
-​	Analyses of *Software Product Lines* (SPLs) rely on automated solvers to navigate complex dependencies among Boolean features and find legal configurations. Often these analyses do not support numerical
+Analyses of *Software Product Lines* (SPLs) rely on automated solvers to navigate complex dependencies among Boolean features and find legal configurations. Often these analyses do not support numerical
 features with constraints because propositional formulas use only Boolean variables. While other automated solvers can represent numerical features natively, they are limited in their ability to count
 and *Uniform Random Sample* (URS) configurations, which are key operations to derive unbiased statistics on configuration spaces. 
 
-​	*Bit-blasting* is a technique to encode numerical constraints as propositional formulas. We use bit-blasting to encode boolean and numerical constraints so that we can exploit existing #SAT solvers to count and URS configurations. 
+*Bit-blasting* is a technique to encode numerical constraints as propositional formulas. We use bit-blasting to encode boolean and numerical constraints so that we can exploit existing #SAT solvers to count and URS configurations. 
 
-​	Compared to state-of-art Satisfiability Modulo Theory and Constraint Programming solvers, our approach has two advantages: 1) faster and more scalable configuration counting and 2) reliable URS of SPL configurations. Our work can be **re-used** to extend prior SAT-based SPL analyses to support numerical features and constraints.
+Compared to state-of-art Satisfiability Modulo Theory and Constraint Programming solvers, our approach has two advantages: 1) faster and more scalable configuration counting and 2) reliable URS of SPL configurations. Our work can be **re-used** to extend prior SAT-based SPL analyses to support numerical features and constraints.
 
-​	This *README* provides the detailed explanations and technical steps to fast and easily make use of our approach. **A VM is provided due to the amount of knowledge and time necessary to configure and run the third-party and the new tools**. Additionally, a Linux operating system is mandatory to run those tools, while a VM runs on almost any operating system and/or hardware. The VM includes the VirtualBox Guest Tools to allow direct interaction and responsiveness of the VM main *Desktop*.
+This *README* provides the detailed explanations and technical steps to fast and easily make use of our approach. **A VM is provided due to the amount of knowledge and time necessary to configure and run the third-party and the new tools**. Additionally, a Linux operating system is mandatory to run those tools, while a VM runs on almost any operating system and/or hardware. The VM includes the VirtualBox Guest Tools to allow direct interaction and responsiveness of the VM main *Desktop*.
 
 ## Artifact Third-Party Content
 
